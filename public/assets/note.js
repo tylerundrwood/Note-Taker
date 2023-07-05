@@ -3,7 +3,7 @@ const path = require('path')
 const uniqid = require('uniqid')
 const fs = require('fs')
 
-let db = require('./db/db.json')
+let db = require('../../db/db.json')
 
 // port for local host
 const PORT = process.env.PORT || 6999;
