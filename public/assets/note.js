@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 6999;
 // turn into a function
 const app = express()
 
-// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -31,4 +30,57 @@ app.get('/notes', (req, res) => {
 // Route for api/notes 
 app.get('/api/notes', (req, res) => {
   res.json(db)
+})
+
+app.post('/api/notes', (req, res) => {
+
+  console.info(`${req.method} request received to add a note`);
+
+ 
+  const { title, text } = req.body
+
+  if(title && text) {
+      const newNote = {
+          title,
+          text,
+          id: uniqid()
+      };
+
+      // get existing notes
+      fs.readFile('./db/db.json', 'utf8', (err, data) => {
+          if(err) {
+              console.log(err)
+          } else {
+              // converts string to json obj
+              const parsedNotes = JSON.parse(data)
+
+              // add new note
+              parsedNotes.push(newNote)
+
+              // push new notes to db
+              fs.writeFile('./db/db.json', JSON.stringify(parsedNotes), null, (err) => {
+                  if(err) {
+                      console.log(err)
+                  } else {
+                      console.log('write file success!')
+                  }
+              })
+          }
+      })
+
+      const response = {
+          status: 'success',
+          body: newNote
+      }
+
+      console.log(response);
+      res.status(201).json(response);
+    } else {
+      res.status(500).json('Error in posting review');
+    }
+  }
+)
+// alert for the server start
+app.listen(PORT, () => {
+  console.log(`Server is live on ${PORT} 🥶`)
 })
