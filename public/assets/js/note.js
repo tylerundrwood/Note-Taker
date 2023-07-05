@@ -39,3 +39,21 @@ app.get('/', (req, res) =>
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '../public/notes.html'))
 );
+
+function browserRefresh() {
+    var html = fs.readFileSync('./notes');
+    var $ = cheerio.load(html);
+    $('body').append(`<script src="${process.env.BROWSER_REFRESH_URL}"></script>`);
+    return $.html();
+  }
+  
+  // get api notes
+  app.get('/api/notes', (req, res) => {
+    console.info(`${req.method} request received for tips`);
+    readFromFile(dataBase).then((data) => res.json(JSON.parse(data)));
+  })
+  
+  const writeToFile = (destination, content) =>
+  fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
+    err ? console.error(err) : console.info(`\nData written to ${destination}`)
+  );
