@@ -1,7 +1,7 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "main": "note.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon note.js"
@@ -12,7 +12,6 @@
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "path": "^0.12.7",
-    "require": "^2.4.20",
     "uniqid": "^5.4.0"
   },
   "description": ""

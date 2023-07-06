@@ -1,9 +1,9 @@
-const express = require('express')
-const path = require('path')
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const uniqid = require('uniqid')
-const fs = require('fs')
 
-let db = require('../../db/db.json')
+let db = require('./db/db.json')
 
 // port for local host
 const PORT = process.env.PORT || 6999;
